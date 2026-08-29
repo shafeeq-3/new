@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FinalSurprise = () => {
   const [stage, setStage] = useState(0);
   const [flowerTouched, setFlowerTouched] = useState(false);
+  const [showSecondSurprise, setShowSecondSurprise] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -11,14 +12,21 @@ const FinalSurprise = () => {
 
     const timers = [
       setTimeout(() => setStage(1), 800),
-      setTimeout(() => setStage(2), 3000),
-      setTimeout(() => setStage(3), 5500),
-      setTimeout(() => setStage(4), 8000),
-      setTimeout(() => setStage(5), 10500),
+      setTimeout(() => setStage(2), 3500),
+      setTimeout(() => setStage(3), 6000),
+      setTimeout(() => setStage(4), 8500),
+      setTimeout(() => setStage(5), 11000),
+      setTimeout(() => setStage(6), 14000),
     ];
 
     return () => timers.forEach(t => clearTimeout(t));
   }, [flowerTouched]);
+
+  useEffect(() => {
+    if (stage >= 6) {
+      setTimeout(() => setShowSecondSurprise(true), 3000);
+    }
+  }, [stage]);
 
   useEffect(() => {
     if (stage < 1) return;
@@ -338,12 +346,16 @@ const FinalSurprise = () => {
               >
                 Hamesha. ❤️
               </motion.div>
+            </>
+          )}
 
-              {/* Hidden Easter Egg - tap the heart */}
+          {/* Second surprise */}
+          <AnimatePresence>
+            {stage >= 6 && !showSecondSurprise && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.6 }}
-                transition={{ duration: 2, delay: 2 }}
+                transition={{ duration: 2 }}
                 style={{
                   fontSize: 'clamp(0.8rem, 2.5vw, 1rem)',
                   color: 'rgba(255, 255, 255, 0.5)',
@@ -353,8 +365,77 @@ const FinalSurprise = () => {
               >
                 — Shafee ki Qandeel, Shafeeq ki Jaan, Shafeeq ka Sukoon —
               </motion.div>
-            </>
-          )}
+            )}
+          </AnimatePresence>
+
+          {/* Second final surprise */}
+          <AnimatePresence>
+            {showSecondSurprise && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, type: 'spring' }}
+                style={{
+                  textAlign: 'center',
+                  marginTop: '4rem'
+                }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  className="elegant-text small"
+                  style={{ marginBottom: '2rem' }}
+                >
+                  Ek choti si baat aur…
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.5, delay: 1 }}
+                  className="elegant-text"
+                  style={{
+                    fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+                    lineHeight: 1.8,
+                    maxWidth: '85%',
+                    margin: '0 auto',
+                    color: '#fff'
+                  }}
+                >
+                  Aap bas… aap hain.
+                  <br />
+                  <br />
+                  Aur yahi kaafi hai.
+                </motion.div>
+
+                {/* Small twinkling stars around text */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      scale: [0.5, 1.2, 0.5]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      delay: i * 0.4
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: `${20 + Math.random() * 60}%`,
+                      top: `${30 + Math.random() * 40}%`,
+                      fontSize: 'clamp(0.8rem, 2vw, 1.2rem)'
+                    }}
+                  >
+                    ✨
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </div>

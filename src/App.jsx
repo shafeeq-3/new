@@ -7,9 +7,14 @@ import NameReveal from './components/NameReveal';
 import NoComparison from './components/NoComparison';
 import HerHeart from './components/HerHeart';
 import Sukoon from './components/Sukoon';
+import MoonlitGarden from './components/MoonlitGarden';
+import ConstellationQaandeel from './components/ConstellationQaandeel';
+import RoseReveal from './components/RoseReveal';
 import MagicalGift from './components/MagicalGift';
 import Mohabbat from './components/Mohabbat';
+import MagicMirror from './components/MagicMirror';
 import LoveLetter from './components/LoveLetter';
+import InteractiveCake from './components/InteractiveCake';
 import BirthdayReveal from './components/BirthdayReveal';
 import FinalSurprise from './components/FinalSurprise';
 import MusicButton from './components/MusicButton';
@@ -20,9 +25,14 @@ const CHAPTERS = [
   'noComparison',
   'heart',
   'sukoon',
+  'garden',
+  'constellation',
+  'rose',
   'gift',
   'mohabbat',
+  'mirror',
   'letter',
+  'cake',
   'birthday',
   'final'
 ];
@@ -122,14 +132,29 @@ function App() {
         {chapterKey === 'sukoon' && (
           <Sukoon key="sukoon" onNext={nextChapter} />
         )}
+        {chapterKey === 'garden' && (
+          <MoonlitGarden key="garden" onNext={nextChapter} />
+        )}
+        {chapterKey === 'constellation' && (
+          <ConstellationQaandeel key="constellation" onNext={nextChapter} />
+        )}
+        {chapterKey === 'rose' && (
+          <RoseReveal key="rose" onNext={nextChapter} />
+        )}
         {chapterKey === 'gift' && (
           <MagicalGift key="gift" onNext={nextChapter} />
         )}
         {chapterKey === 'mohabbat' && (
           <Mohabbat key="mohabbat" onNext={nextChapter} />
         )}
+        {chapterKey === 'mirror' && (
+          <MagicMirror key="mirror" onNext={nextChapter} />
+        )}
         {chapterKey === 'letter' && (
           <LoveLetter key="letter" onNext={nextChapter} />
+        )}
+        {chapterKey === 'cake' && (
+          <InteractiveCake key="cake" onNext={nextChapter} />
         )}
         {chapterKey === 'birthday' && (
           <BirthdayReveal 

@@ -150,10 +150,27 @@ const LoveLetter = ({ onNext }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1 }}
                 className="elegant-text small"
-                style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)' }}
+                style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', marginBottom: '2rem' }}
               >
                 Isay kholain…
               </motion.div>
+
+              {/* Always show skip button */}
+              <motion.button
+                className="romantic-button safe-margin-bottom"
+                onClick={onNext}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 2 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: 'rgba(255, 215, 0, 0.15)',
+                  border: '1px solid rgba(255, 215, 0, 0.3)'
+                }}
+              >
+                <span>Aagay chalain</span>
+              </motion.button>
             </>
           )}
 

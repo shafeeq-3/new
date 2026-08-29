@@ -47,6 +47,7 @@ const BirthdayReveal = ({ onNext, isMidnight }) => {
     canvas.height = window.innerHeight;
 
     let flowers = [];
+    let stars = [];
     let animationFrame;
 
     // Create floating flowers/petals
@@ -63,9 +64,48 @@ const BirthdayReveal = ({ onNext, isMidnight }) => {
       });
     }
 
+    // Create twinkling stars for night sky
+    for (let i = 0; i < 50; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * 0.6,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.8 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.01,
+        twinklePhase: Math.random() * Math.PI * 2
+      });
+    }
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Draw twinkling stars
+      stars.forEach((star) => {
+        star.twinklePhase += star.twinkleSpeed;
+        const twinkle = (Math.sin(star.twinklePhase) + 1) / 2;
+        const currentOpacity = star.opacity * twinkle;
+
+        // Glow
+        const gradient = ctx.createRadialGradient(
+          star.x, star.y, 0,
+          star.x, star.y, star.size * 4
+        );
+        gradient.addColorStop(0, `rgba(255, 215, 0, ${currentOpacity})`);
+        gradient.addColorStop(1, 'transparent');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Core
+        ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Draw flowers
       flowers.forEach((flower) => {
         flower.y += flower.speed;
         flower.rotation += flower.rotationSpeed;
